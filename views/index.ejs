@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script  src="/socket.io/socket.io.js"></script>
+
+<body>
+    <div id="msg-container">
+
+    </div>
+ <div class="massage-input-container">
+    ys this one
+       <div class=""> <input type="text" id="massage-input"></div>
+        <div class=""><button id="massage-btn" onclick="send()"></button></div>
+ 
+ </div>
+    <script src="./index.js">
+
+    </script>
+</body>
+<script>
+     const socket = io();
+</script>
+<style>
+    body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+    .massage-input-container{
+        display: flex;
+        background-color: blue;
+        flex-direction: row;
+        
+    }
+    #massage-input{
+    background-color: red;
+    width: 400px;
+    height: 40px;
+
+}
+
+#massage-btn{
+    background-color: red;
+    width: 70px;
+    height: 40px;
+}
+</style>
+<script>
+    function send(){
+
+        let input=document.getElementById('massage-input');
+        console.log(input.value)
+    }
+</script>
+</html>

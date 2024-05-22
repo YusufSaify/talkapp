@@ -1,0 +1,461 @@
+<!-- Include the socket.io client library -->
+<!-- Include the socket.io client library -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Phudu:wght@300;400;500&family=Playfair+Display:ital@0;1&display=swap"
+    rel="stylesheet">
+
+<body>
+    <div class="users-section">
+        <input type="text" placeholder="Search user" oninput="searchUsers()" class="searchbar">
+        <div id="online-users-list" class="users">
+            <div class="user">
+                <div class="status"></div>
+                <div class="username">yusuf</div>
+            </div>
+
+            <div class="user">
+                <div class="status"></div>
+                <div class="username">Aleifya</div>
+            </div>
+
+            <div class="user">
+                <div class="status"></div>
+                <div class="username">john</div>
+            </div>
+            <!-- Online users will be dynamically added here -->
+        </div>
+    </div>
+
+    <div class="chat-section">
+        <div class="chat-user-name">public chat room</div>
+        <div class="top user-chat">
+            <!-- <div class="chat">
+                hii asbdak
+            </div>
+            <div class="chat">
+                hii asbdak
+            </div>
+            <div class="chat">
+                hii asbdak
+            </div>
+            <div class="chat">
+                hii asbdak
+            </div>
+            <div class="chat">
+                hii asbdak
+            </div>
+            <div class="chat">
+                hii asbdak
+            </div>
+            <div class="chat">
+                hii asbdak
+            </div>
+            <div class="chat">
+                hii asbdak
+            </div>
+            <div class="chat you">
+                hii asbdak
+            </div>
+            <div class="chat">
+                hii asbdak
+            </div>
+            <div class="chat">
+                hii asbdak
+            </div> -->
+
+
+
+        </div>
+        <div class="bottom">
+            <input class="massage-input" placeholder="Enter your message here" type="text">
+            <button onclick="sendPrivateMessage()"><img src="https://img.icons8.com/metro/26/paper-plane.png"
+                    alt=""></button>
+        </div>
+    </div>
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    localStorage.clear();
+    const socket = io();
+
+    // Replace 'userId' with the actual user ID of the current user
+    const username = prompt("Enter your name");
+    var searchusers = []
+
+    const searchbar = document.querySelector(".searchbar").placeholder = username;
+    // Define an array of users
+    // const users = ["yusuf", "Aleifya", "john"];
+
+    // Function to search and filter users
+    function searchUsers() {
+        // console.log(chala)
+        const searchInput = document.querySelector('.searchbar');
+        const searchText = searchInput.value.toLowerCase();
+        const onlineUsersList = document.getElementById('online-users-list');
+
+        // Clear the current user list
+        onlineUsersList.innerHTML = '';
+
+        // Filter and display users based on the search text
+        searchusers.forEach((user) => {
+            if (user.toLowerCase().includes(searchText)) {
+                const userElement = document.createElement('div');
+                userElement.className = 'user';
+                userElement.innerHTML = `
+                <div class="status"></div>
+                <div class="username">${user}</div>
+            `;
+                userElement.addEventListener('click', () => startPrivateChat(user));
+                onlineUsersList.appendChild(userElement);
+            }
+        });
+    }
+
+    // Emit a 'join' event when the user connects
+    socket.emit('join', username);
+
+    // Variable to store the currently selected recipient ID
+    let toUserName2 = null;
+
+
+
+    // Listen for updates to the online user list
+    socket.on('updateOnlineUsers', (onlineUsersName) => {
+        const onlineUsersList = document.getElementById('online-users-list');
+        console.log(onlineUsersName)
+        searchusers = onlineUsersName
+        onlineUsersList.innerHTML = '';
+
+        onlineUsersName.forEach((onlineUserName) => {
+
+
+            // if (onlineUserName !== username) {
+
+            const userElement = document.createElement('div');
+            userElement.className = 'user';
+            userElement.innerHTML = `
+                <div class="status"></div>
+                <div class="username">${onlineUserName}</div>
+                `;
+            userElement.addEventListener('click', () => startPrivateChat(onlineUserName));
+            onlineUsersList.appendChild(userElement);
+            // }
+        });
+    });
+    const messageContainer = document.querySelector('.user-chat');
+    const messageInput = document.querySelector('.massage-input');
+
+
+    // Function to start a private chat with a user
+    function startPrivateChat(toUserName) {
+        const prevchats = localStorage.getItem(toUserName) || " "
+        console.log("p : " + prevchats)
+        messageContainer.innerHTML = "";
+        messageContainer.innerHTML = prevchats;
+
+
+        toUserName2 = toUserName;
+        document.querySelector('.chat-user-name').textContent = toUserName;
+        document.querySelector('.massage-input').focus();
+        
+
+        messageInput.addEventListener('keydown', function (event) {
+            // Check if the pressed key is "Enter" (keycode 13) or has the key identifier "Enter"
+            if (event.key === 'Enter' || event.keyCode === 13) {
+                // Call your function here, e.g., sendPrivateMessage()
+                sendPrivateMessage();
+            }
+        })
+    }
+
+    // Function to send a private message
+    function sendPrivateMessage() {
+
+
+
+
+        const message = messageInput.value;
+        if (message && toUserName2) {
+
+        const messageElement = document.createElement('div');
+        messageElement.classList.add("chat")
+        messageElement.classList.add("you")
+        messageElement.innerText = `${message}`;
+        messageContainer.appendChild(messageElement);
+
+        // Scroll to the bottom of the container
+        // messageContainer.scrollTop = container.scrollHeight;
+
+        // const previouschat = localStorage.getItem(toUserName2)
+        // const completechat = previouschat + messageContainer.innerHTML;
+        // console.log("c: "+completechat)
+
+
+
+       
+            localStorage.setItem(toUserName2, messageContainer.innerHTML);
+            socket.emit('privateMessage', { username, toUserName: toUserName2, message });
+            messageInput.value = ''; // Clear the input field
+        }
+    }
+
+    // Listen for private messages
+    socket.on('privateMessage', ({ fromusername, message }) => {
+
+        const previouschat = localStorage.getItem(fromusername) || '';
+
+        const messageElement = document.createElement('div');
+        messageElement.innerText = `${message}`;
+        messageElement.classList.add("chat")
+        messageContainer.innerHTML = " ";
+        messageContainer.appendChild(messageElement);
+
+        // Update the chat history in local storage
+        const completechat = previouschat + messageContainer.innerHTML;
+
+        localStorage.setItem(fromusername, completechat);
+
+        messageContainer.innerHTML = ""
+        startPrivateChat(toUserName2);
+    });
+</script>
+
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --light-clr: white;
+        --light-clr2: rgb(236 221 255);
+        --light-clr3: rgb(141 123 165);
+
+    }
+
+    body {
+        display: flex;
+        /* background-color: rgb(222, 130, 130); */
+    }
+
+    .users-section {
+        background-color: var(--light-clr);
+        width: 300px;
+        height: 100vh;
+    }
+
+    .searchbar {
+        width: 280px;
+        outline: none;
+        height: 60px;
+        margin: 10px 10px;
+        border: none;
+        border-radius: 10px;
+        color: black;
+        text-transform: capitalize;
+        padding: 0px 10px;
+        border: 2px solid var(--light-clr2);
+        font-size: 18px;
+        /* background-color: rgb(200, 200, 200); */
+        /* border: 2px solid rgb(188, 188, 188); */
+        box-shadow: 0px 0px 20px var(--light-clr2);
+    }
+
+    .user {
+        width: 280px;
+        height: 50px;
+        border-radius: 10px;
+        /* background-color: var(--light-clr2); */
+        border: 1px solid var(--light-clr2);
+
+        margin-bottom: 10px;
+        margin-left: 10px;
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        justify-content: left;
+
+    }
+
+    .user:hover {
+        background-color: var(--light-clr3);
+        color: white;
+    }
+
+    .status {
+        box-shadow: 0px 0px 10px rgb(163, 255, 163);
+        width: 8px;
+        height: 8px;
+        background-color: rgb(127, 210, 68);
+        margin-left: 10px;
+        border-radius: 50%;
+    }
+
+    .username {
+        text-transform: capitalize;
+        /* background-color: green; */
+        font-size: 20px;
+        margin-left: 10px;
+        font-family: 'Phudu', cursive;
+        letter-spacing: 1px;
+
+
+    }
+
+    .chat-section {
+        background-color: var(--light-clr2);
+        width: calc(100vw - 300px);
+    }
+
+    .chat {
+        /* background-color: #e0e0e0; */
+        padding: 10px;
+        font-size: 20px;
+        /* display:inline-block; */
+        color: var(--light-clr3);
+        /* font-style: italic; */
+        font-family: 'Merriweather', serif;
+        border-radius: 10px;
+        width: 100%;
+        margin-bottom: 5px;
+        float: left;
+        border-top-left-radius: 0px;
+    }
+
+    .you {
+        float: right;
+        text-align: right;
+        border-radius: 10px;
+        border-top-right-radius: 0px;
+
+
+    }
+
+    .chat-user-name {
+        background-color: var(--light-clr);
+        /* border-left: 4px solid #000; */
+        /* background: linear-gradient(to right, rgba(0, 0, 0, 0.242),transparent); */
+        font-size: 26px;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+        height: 60px;
+        font-family: 'Phudu', cursive;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        color: var(--light-clr3);
+        padding-left: 10px;
+        margin: 10px;
+        margin-bottom: 0px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    ::placeholder {
+        color: rgb(213, 213, 213);
+    }
+
+    .top {
+        border-top: 2px solid var(--light-clr2);
+        overflow: auto;
+        overflow-x: hidden;
+        margin: 10px;
+        height: calc(100% - 150px);
+        background-color: var(--light-clr);
+        border-bottom: 2px solid var(--light-clr2);
+        box-shadow: inset 0px 0px 10px 0px var(--light-clr2);
+
+
+        /* background: linear-gradient(to top, rgb(233, 233, 233), white); */
+        margin-bottom: 0px;
+        margin-top: 0px;
+        padding: 5px;
+        /* display: flex; */
+        /* flex-direction: column; */
+    }
+
+    .bottom {
+        height: 70px;
+        /* background-color: rgb(0, 255, 166); */
+        width: 100%;
+        padding: 10px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+
+        position: relative;
+    }
+
+    .bottom input {
+        margin: 0;
+        font-family: 'Merriweather', serif;
+        font-size: 18px;
+        padding: 0px 10px;
+        /* background: red; */
+        outline: none;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        font-size: 20px;
+        border: none;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+
+        /* border-top: px solid #cfcfcf; */
+
+    }
+
+    .bottom button {
+        position: absolute;
+        margin: 0;
+        top: 0%;
+        right: 10px;
+        /* bottom: 0%; */
+        font-size: 18px;
+        cursor: pointer;
+        height: 70px;
+        background-color: transparent;
+        border: none;
+        width: 70px;
+    }
+
+    .bottom button:hover>img {
+
+        opacity: .5;
+    }
+
+    .bottom button:active {
+        transform: scale(.9);
+    }
+
+    .bottom img {
+        width: 50px;
+        padding: 10px;
+        opacity: .4;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 3px;
+        /* height: 4px; */
+        /* Width of the scrollbar */
+    }
+
+
+    ::-webkit-scrollbar-track {
+        /* Background color of the track */
+        background: var(--light-clr2);
+    }
+
+    /* Handle (the draggable part of the scrollbar) */
+    ::-webkit-scrollbar-thumb {
+        /* Color of the thumb */
+        background: rgb(255, 255, 255);
+        border-radius: 6px;
+        /* Round the corners of the thumb */
+    }
+</style>

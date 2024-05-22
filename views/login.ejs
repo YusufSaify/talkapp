@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        :root {
+            --black: rgb(30, 30, 30);
+        }
+
+        * {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            height: 100vh;
+            background-color: #ffffff;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            bottom: -100%;
+            width: 1000px;
+            height: 1000px;
+            background-color: #dbffbf;
+            z-index: 0;
+            border-radius: 50%;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: -60%;
+            width: 600px;
+            height: 600px;
+            background-color: #b2e7ff;
+            z-index: 0;
+            border-radius: 50%;
+            animation: move 15s ease infinite;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            padding: 50px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            z-index: 1;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            font-size: 20px;
+            border-radius: 5px;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .container input[type="submit"] {
+            width: 110%;
+            background-color: #7facc1;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .container input[type="submit"]:hover {
+            background-color: #7595a5;
+        }
+
+        .container a {
+
+            text-decoration: underline;
+            color: gray;
+            transition: color 0.3s;
+        }
+
+        .container a:hover {
+            color: blue;
+        }
+
+        ::placeholder{
+            color: rgb(182, 182, 182);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Login Form</h2>
+
+        <p class="error">
+            <% if (error) { %>
+                <%= error %>
+                    <% } %>
+        </p>
+
+        <form action="/login" method="post">
+            <input type="text" name="username" placeholder="Enter your username">
+            <input type="password" name="password" placeholder="Enter your password">
+            <input type="submit" value="Login">
+        </form>
+
+        <a href="./signup">Create a new account</a>
+    </div>
+</body>
+
+</html>

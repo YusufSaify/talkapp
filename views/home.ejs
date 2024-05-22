@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="first">
+        <a href="/logout" class="logout">
+            <img width="96" height="96" src="https://img.icons8.com/material-outlined/96/shutdown--v1.png" alt="shutdown--v1"/>
+        </a>
+        <a href="">
+            <img width="96" height="96" src="https://img.icons8.com/pulsar-line/48/speech-bubble-with-dots.png" alt="speech-bubble-with-dots"/>
+        </a>
+        <a href="">
+            <img width="96" height="96" src="https://img.icons8.com/material-sharp/96/bell.png" alt="bell"/>
+        </a>
+        <a href="">
+
+            <img width="100" height="100" src="https://img.icons8.com/ios-filled/96/search--v1.png"
+                alt="commercial--v1" />
+        </a>
+        <a href="">
+            <img width="96" height="96" src="https://img.icons8.com/material-outlined/96/admin-settings-male.png" alt="admin-settings-male"/>
+        </a>
+        <a href="">
+            <img width="96" height="96" src="https://img.icons8.com/material/96/contacts--v1.png" alt="contacts--v1"/>
+        </a>
+
+    </div>
+    <div class="second">
+        <input type="text" id="searchusername" placeholder=<%=user.fullname %>>
+        <div class="userssection">
+
+        </div>
+
+    </div>
+    <div class="third">
+        <div class="selecteduser">
+            <div class="selecteduserdetail">
+            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="selecteduserprofileimg">
+            <div class="">
+            <h3 id="selecteduserusername"></h3>
+            <p id="selecteduserstatus"></p>
+            </div>
+        </div>
+            <div class="option deletechat">
+                <button ><img width="96" height="96" src="https://img.icons8.com/material-rounded/96/filled-trash.png" alt="filled-trash"/></button>
+            </div>
+
+        </div>
+        <div class="chatsection">
+            <div class="chats">
+                <!-- <div class="send message">hiiii</div>
+                <div class="recieve message">hello</div> -->
+
+            </div>
+            <div class="inputs" id="messageinput">
+                <input placeholder="Message.." id="input1" type="text">
+                <button id="sendbtn" class="sendbtnimg"><img width="96" height="96" src="https://img.icons8.com/material-rounded/96/sent.png" alt="sent"/></button>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<img src="../images/userprofile.jpg" alt="">
+
+</html>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Lexend", sans-serif;
+    }
+
+    body {
+        display: flex;
+    }
+    .sendbtnimg img{
+        width: 30px;
+        height: 30px;
+        filter: invert(1);
+        cursor: pointer;
+
+    }
+
+    .first {
+        /* background-color: var(--clr3); */
+        width: 120px;
+        /* height: ; */
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        padding:  00px 20px;
+        border-radius: 10px;
+        margin: 15px;
+    }
+
+    .first img {
+        width: 30px;
+        filter: invert(1);
+        text-shadow: 3px 0px 12px var(--clr2 );
+        /* background-color: #e0f374; */
+        height: 30px;
+        opacity: .3;
+        padding: 2px;
+        border-radius: 10px;
+        transition: .3s;
+    
+    }
+    
+    .first a {
+        background: var(--clr2);
+        padding: 10px;
+        opacity: 0;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        transition: .4s;
+        justify-content: center;
+        box-shadow:inset 3px 3px 1px 0px #ffffff33, inset -3px -3px 1px 0px #000000b7, 0px 0px 9px 0px #9b9b9b;
+        margin: 15px 0px;
+        animation: anim2 .6s cubic-bezier(0.87, 0.09, 0.58, 1)  forwards ;
+        /* transform:translateY(-70px) translateX(-100px) rotate(90deg); */
+    }
+    .first a:nth-child(1){
+        animation-delay: .1s;
+    }
+    .first a:nth-child(2){
+        animation-delay: .2s;
+    }
+    .first a:nth-child(3){
+        animation-delay: .3s;
+    }
+    .first a:nth-child(4){
+        animation-delay: .4s;
+    }
+    .first a:nth-child(5){
+        animation-delay: .5s;
+    }
+    .first a:nth-child(6){
+        animation-delay: .6s;
+    }
+
+
+
+
+
+
+    @keyframes anim2 {
+    to{opacity: 1;
+    }
+        
+    }
+    .first a:hover img{
+        /* background-color: rgba(128, 128, 128, 0.251); */
+        opacity: 1;
+        filter: drop-shadow(0px 0px 10px rgb(0, 0, 0)) invert(1);
+    }
+    .first a:hover{
+        background-color: var(--clr1);
+    }
+    .first img:nth-child(1){
+        animation-delay: .1s;
+    }
+
+    .second {
+        /* background-color: pink; */
+        width: 336px;
+        height: 100vh;
+        border-left: 2px solid #c8c8c848;
+
+        padding: 15px;
+    }
+
+    .second input {
+        width: 300px;
+        height: 50px;
+        padding: 10px;
+        /* border: 2px solid rgb(200, 200, 200); */
+        background-color: var(--clr3);
+        border-radius: 8px;
+        box-sizing: border-box;
+        border: none;
+        color: rgb(75, 75, 75);
+        outline: none;
+        font-size: 20px
+    }
+
+    .second .userssection {
+        /* height: auto; */
+        margin-top: 10px;
+        height: calc(100vh - 80px);
+        overflow: scroll;
+
+        /* background-color: blue; */
+
+    }
+    .second:placeholder-shown{
+        display: none;
+    }
+
+    .user {
+        /* background-color: yellow; */
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        max-width: 300px;
+        cursor: pointer;
+        border-radius: 4px;
+        margin: 10px 0px;
+        /* border-bottom: 2px solid rgba(235, 235, 235, 0.698); */
+        padding: 10px 0px;
+        background: linear-gradient(to right, rgba(240, 240, 240, 0), whitesmoke);
+        animation: anim1 1s ease forwards;
+        opacity: 0;
+    }
+   
+
+    @keyframes anim1 {
+    to{
+        opacity: 1 ;
+    }    
+    }
+
+    .user:nth-child(1) {
+        animation-delay: 0s;
+    }
+    .user:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+    .user:nth-child(3) {
+        animation-delay: 0.2s;
+    }
+    .user:nth-child(4) {
+        animation-delay: 0.3s;
+    }
+    .user:nth-child(5) {
+        animation-delay: 0.4s;
+    }
+    .user:nth-child(6) {
+        animation-delay: 0.5s;
+    }
+
+    .flex {
+        display: flex;
+        /* align-items: center; */
+        flex-direction: column;
+        justify-content: space-between;
+        /* background-color: red; */
+        width: -webkit-fill-available;
+    }
+
+    .flex p {
+        /* padding: 5px; */
+        border-radius: 30px;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--clr2);
+        color: whitesmoke;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .user:hover {
+    }
+
+    .user img {
+        width: 50px;
+        background-color: rgb(207, 207, 207);
+        height: 50px;
+        border-radius: 10px;
+        margin-right: 15px;
+        opacity: .3;
+        object-fit: cover;
+    }
+
+    .user h3 {
+        font-size: 24px;
+        font-weight: 100;
+        font-family: math;
+        color: var(--clr2);
+
+    }
+
+    .user p {
+        color: rgb(189, 189, 189);
+        width: max-content;
+        background-color: transparent;
+        white-space: nowrap;       /* Prevent the text from wrapping to a new line */
+    overflow: hidden;          /* Hide the overflow text */
+    text-overflow: ellipsis;   /* Display an ellipsis ('...') to indicate that the text has been truncated */
+    width: 200px;      
+    border-radius: 0px;        /* Set the width of the container (adjust as needed) */
+    display: inline-block; 
+    }
+
+    .third {
+        /* background-color: rgb(255, 255, 255); */
+        border-left: 2px solid #c8c8c848;
+
+
+        width: -webkit-fill-available;
+    }
+
+    .selecteduser {
+        /* background-color: rgb(234, 234, 234); */
+        margin: 15px;
+        border-radius: 10px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        }
+        .selecteduserdetail{
+            display: flex;
+            font-display: row;
+            align-items: center;
+        }
+
+    .selecteduserdetail img {
+        width: 60px;
+        width: 60px;
+        border: 3px solid var(--clr2);
+        height: 60px;
+        box-shadow:-4px 6px 14px rgb(191 191 191);
+        border-bottom-left-radius: 0px;
+        margin-right: 10px;
+        border-right: none;
+        object-fit: cover;
+        cursor: pointer;
+        border-radius: 30px;
+        border-top: none;
+        transition: .3s;
+    }
+
+    .selecteduserdetail img:hover {
+        transform: translateY(-10px) scale(1.1);
+
+    }
+
+    .selecteduser h3 {
+        color: var(--clr2);
+        font-size: 30px;
+        font-family: math;
+    }
+
+    .selecteduser p {
+        color: rgb(178, 158, 203);
+    }
+
+    .chatsection {
+        height: -webkit-fill-available;
+        /* background-color: orange; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        padding-top: 0px;
+        /* justify-content: space-between; */
+    }
+
+    .chats {
+        overflow-y: scroll;
+        padding: 10px 0px;
+        width: 100%;
+        /* background:var(--clr3); */
+        border-top: 2px solid rgb(49 23 83 / 12%);
+        /* border-radius: 10px; */
+        /* border-right: 0px;
+        border-left: 0px; */
+        height: calc(100vh - 200px);
+    }
+
+    .chatsection .inputs {
+        margin-top: 15px;
+        width: 100%;
+        display: flex;
+        height: 60px;
+        /* background-color: blue; */
+    }
+
+    :root {
+        --clr1: #2f6cb2;
+
+        --clr2: #333333;
+        --clr3: rgb(234 234 234);
+    }
+
+
+    .send {
+        background: linear-gradient(-90deg, var(--clr2), var(--clr1));
+
+        float: right;
+        padding: 5px 10px;
+        border-radius: 10px;
+        border-bottom-right-radius: 0px;
+        border-top-right-radius:0px ;
+        text-align: right;
+        display: block;
+        /* Add display block */
+        clear: both;
+        /* Ensure message containers clear floats */
+    }
+
+    .recieve {
+        background: linear-gradient(90deg,var(--clr1), var(--clr1));
+        float: left;
+        padding: 5px 10px;
+        border-radius: 10px;
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+        text-align: left;
+        display: block;
+        /* Add display block */
+        clear: both;
+        /* Ensure message containers clear floats */
+    }
+    .read{
+        background: linear-gradient(90deg,var(--clr1), var(--clr1));
+
+    }
+
+    .message {
+        /* Styles for the common message container */
+        display: block;
+        /* Add display block */
+        clear: both;
+        font-size: 20px;
+        cursor: pointer;
+        margin: 2px 0px;
+        max-width: 600px;
+        margin-bottom:10px;
+        color: whitesmoke;
+        text-shadow: 1px 1px 2px black;
+        /* Ensure message containers clear floats */
+    }
+    .deletechat button{
+        background: rgb(215, 215, 215);
+        border: 2px solid rgb(214, 213, 213);
+        padding: 10px 20px;
+        color: #5b5b5b;
+        border-radius: 10px;
+        /* border: none; */
+        cursor: pointer;
+        font-size: 18px;
+    }
+    
+    .deletechat button:active{
+        background-color: rgb(160, 160, 160);
+    }
+    .deletechat img{
+        width: 30px;
+        opacity: .5;
+        height: 30px;
+    }
+    .inputs input {
+        border-radius: 10px;
+        border: none;
+        /* background-color: rgb(224, 224, 224); */
+        border-bottom-right-radius: 0px;
+        border-top-right-radius: 0px;
+        /* background: linear-gradient(to right, rgb(244, 244, 244),rgb(244, 244, 244)40%,var(--clr2)); */
+        border: 2px solid var(--clr2);
+        cursor: pointer;
+        outline: none;
+        color: var(--clr2);
+        font-size: 20px;
+        padding: 0px 10px;
+        width: -webkit-fill-available;
+    }
+
+    .inputs button {
+        border-radius: 10px;
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+        border: none;
+        font-size: 20px;
+        background: var(--clr2);
+        color: whitesmoke;
+        width: 90px;
+    }
+
+    .inputs svg {
+        width: 10px;
+    }
+
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+        /* /* height: 300px£;  */
+
+    }
+
+    ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+        /*  */
+        /* background-color: #ffffff; */
+    }
+
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #e3e3e3b9;
+        /* border: 2px solid #555555; */
+    }
+    .unreadcount p{
+    background: var(--clr1);
+    padding: 10px;
+    display: flex;
+    color: white;
+    box-shadow: -3px 0px 10px #919191;
+    height: 30px;
+    width: 30px;
+    border-radius: 84px;
+    align-items: center;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    }
+</style>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"
+    integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+
+// document.querySelectorAll('.user').forEach((element, index) => {
+//     element.style.animationDelay = `${index * 0.7}s`;
+// });
+
+
+    var userData = <%-JSON.stringify(user) %>;
+    console.log(userData)
+    const messagesContainer = document.querySelector('.chats');
+    const socket = io();
+    socket.on('connect', () => {
+        // Send the username to the backend
+        socket.emit('online', { username: userData.username, id: socket.id });
+
+     
+
+    });
+
+    socket.on('disconnect', () => {
+        socket.emit('offline', { username: userData.username, id: socket.id });
+    });
+
+    window.addEventListener('beforeunload', () => {
+        socket.emit('offline', { username: userData.username, id: socket.id });
+    });
+
+    socket.on('message', (data) => {
+        console.log("new message recieved!"+JSON.stringify(data));
+        if (data.from === selectedid) {
+            // socket.emit('readConversations', (data.from,userData._id));
+            axios.get(`/readmessages/${data.from}/${userData._id}`);
+            const messageElement = document.createElement('div');
+            messageElement.textContent = data.content;
+            messageElement.classList.add('recieve', 'message');
+            messagesContainer.appendChild(messageElement);
+            scrollToBottom();
+            
+
+        } else {
+            // console.log("new message reieved sir!");
+            socket.emit('getnewdata',(userData._id));
+            socket.on("takenewdata",(data)=>{
+            const updata=JSON.stringify(data.user)
+            loadcontacts(JSON.parse(updata));
+            // console.log(userData)
+        })
+    }
+    });
+
+    // socket.on("updatereadmsg",(data)=>{
+    //     console.log(data);
+    // })
+
+
+
+    var cluster = "";
+
+    const usercont = document.querySelector('.userssection');
+    const searchusername = document.querySelector("#searchusername");
+
+    searchusername.addEventListener("input", function () {
+        usercont.innerHTML = " ";
+        if (searchusername.value == "") {
+            loadcontacts(userData);
+        }
+        if (searchusername.value != "") {
+            cluster = " ";
+            axios.get(`/searchusername/${searchusername.value}`)
+                .then(function (data) {
+                    data.data.forEach(data => {
+                        cluster += `  <div class="user" onclick="selectuser(
+                        {username: '${data.username}',
+                         socketid: '${data.socketid}',
+                         id: '${data._id}',
+
+                        status:'${data.status}'}
+                        )">
+                <img src="https://img.icons8.com/ios-filled/100/user.png" alt="userprofileimg">
+                <div class="">
+                    <h3 >${data.username}</h3>
+                    
+                        </div>
+                        </div>`
+                        // <p>last conversation</p>
+                    });
+                    usercont.innerHTML = cluster;
+                })
+        }
+    })
+
+    const selecteduserusername = document.querySelector("#selecteduserusername");
+    const selecteduserstatus = document.querySelector('#selecteduserstatus');
+    const message = document.querySelector(".chatsection input    ");
+    const sendbtn = document.querySelector("#sendbtn");
+
+    let selectedid = " ";
+    let selectuserdata="";
+
+    function selectuser(userdata) {
+  
+        selectedid = userdata.id;
+        selectuserdata=userdata;
+        
+
+        selecteduserusername.innerHTML = `${userdata.username}`;
+        
+        selecteduserstatus.innerHTML = (userdata.status === 'true') ? "online" : "offline";
+
+        // Update send button onclick attribute
+        sendbtn.setAttribute('onclick', `send(${JSON.stringify(userdata)})`);
+
+        // Fetch conversations for the selected user
+        fetchConversations(userData._id, userdata.id); // Corrected userData to userdata
+        // //console.log(userData._id + "<->" + userdata.id);
+        scrollToBottom();
+        scrollToBottom();
+        const cardidclass="."+userdata.cardid;
+        const c=document.querySelector(cardidclass);
+        if(c){
+           c.innerHTML="";
+        }
+        scrollToBottom();
+        localStorage.setItem('su', JSON.stringify(["user",userdata]));
+
+ 
+        // document.querySelector(".unreadcount").innerText="";
+
+
+        axios.get(`/readmessages/${userdata.id}/${userData._id}`);
+        // loadcontacts(userData);
+        const delbtn=document.querySelector(".deletechat button");
+        delbtn.addEventListener("click", () => delchat(`${userdata.id}`));
+        // console.log(delbtn)
+        message.value="";
+        document.getElementById("input1").focus();
+        sendReadAck(userdata.id,userData._id);
+        //sending message has been read aknowlegement to the sender of the message at real time .
+    
+
+    }
+
+    function sendReadAck(touser,fromuser){
+        console.log("send read ack "+touser +" "+fromuser)
+        socket.emit("sendMsgReadAck",{"touser":touser,"fromuser":fromuser});
+    }
+
+    socket.on('getMsgReadAck',(data)=>{
+        console.log(selectedid)
+        console.log(data)
+        // console.log(data)
+        if(selectedid==data.user){
+            location.reload();
+            // console.log("message read by : "+data.user)
+            // if(selectuserdata){
+
+            //     selectuser(selectuserdata) 
+            // }
+
+        }
+    })
+
+    function delchat(id){
+    document.querySelector(".chats").innerHTML="";
+    axios.get(`/deletechat/${id}/${userData._id}`) 
+     
+    }
+    
+        const su = JSON.parse(localStorage.getItem('su'));
+
+        if(su){
+            console.log(su[1]);
+            selectuser(su[1])
+            scrollToBottom();
+        }
+
+    // Check if there is previously selected user data stored in localStorage
+    const storedUserData = localStorage.getItem('selectedUserData');
+    if (storedUserData) {
+        // Parse stored user data and select the user
+        const userData = JSON.parse(storedUserData);
+        selectuser(userData);
+    }
+
+
+    function fetchConversations(currentUser, otherUser) {
+        // Send a request to the server to fetch conversations between the two users
+        socket.emit('fetchConversations', { currentUser, otherUser });
+    }
+
+    socket.on('conversationsFetched', ({ messages }) => {
+        displayMessages(messages);
+
+    });
+
+    
+
+    function displayMessages(messages) {
+        // Get the container to display messages
+
+        // Clear previous messages
+        messagesContainer.innerHTML = '';
+
+        // Loop through the fetched messages and display them
+        messages.forEach(message => {
+            //console.log(message.content)
+            // Create a new message element
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message.content;
+
+            // Add appropriate classes based on message sender
+            if (message.from._id === userData._id) {
+            if(message.read==true){
+                messageElement.classList.add('read');
+            }
+                messageElement.classList.add('send', 'message');
+            } else {
+                messageElement.classList.add('recieve', 'message');
+            }
+            // Append the message element to the container
+            messagesContainer.appendChild(messageElement);
+        });
+    }
+
+
+    function send(userdata) {
+        if(message.value==""){return}
+        // //console.log(message.value)
+        socket.emit('sendToSocket', { user: userData, sendersid: userData._id, recipientusername: userdata.username, message: message.value });
+
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message.value;
+
+
+        messageElement.classList.add('send', 'message');
+        messagesContainer.appendChild(messageElement);
+        scrollToBottom();
+        loadcontacts(userData);
+    }
+
+
+
+loadcontacts(userData);
+
+    function loadcontacts(userdata) {
+        var cluster2 = ''; // Initialize cluster2 as an empty string
+      
+        userdata.contacts.forEach((contact) => {
+            // console.log("contact : ")
+            axios.get(`/getcontactdetail/${contact}/${userData._id}`)
+                .then(function (response) {
+                    const detail = response.data;
+                    // console.log(detail)
+                    const unreadmsgcount=detail.unreadmsg!=0?`<div class="unreadcount"><p>${detail.unreadmsg}</p></div>`:"";
+             
+                        cluster2 += `
+                    <div class="user" id="${detail._id}" onclick="selectuser({
+                            username: '${detail.username}',
+                            socketid: '${detail.socketid}',
+                            id: '${detail._id}',
+                            status: '${detail.status}',
+                            cardid:'${detail.username}'
+                        })" >
+                        <img src="https://img.icons8.com/ios-filled/100/user.png" alt="userprofileimg">
+                        <div class="flex">
+                        <h3  >${detail.username}</h3>
+                        <p>${detail.lastconv.content}</p>
+                        
+                        
+                        </div>
+                        <div class=${detail.username}>
+                        ${unreadmsgcount}
+                        </div>
+                    </div>`;
+
+                    usercont.innerHTML = cluster2; // Set innerHTML after the loop
+                    
+                })
+             
+        });
+    }
+
+    // loadcontacts(userData);
+    scrollToBottom();
+
+    function scrollToBottom() {
+        const chatsWindow = document.querySelector('.chats');
+        //console.log(chatsWindow)
+        chatsWindow.scrollTop = chatsWindow.scrollHeight;
+    }
+
+    document.querySelector(".selecteduser h3").addEventListener('change', (e) => {
+        //console.log(e)
+    })
+
+
+</script>
